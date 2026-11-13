@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="description" content="Aprenda a criar sites modernos com GitHub e GPT integrado. Um guia prático para tirar suas ideias do papel e publicar na web.">
+  <title>Criando Sites Web com GitHub e GPT Integrado | Jhonatan Oliveira</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { colors: { ink: '#0B0F19', panel: '#111827', cyan: '#06B6D4', indigo: '#6366F1', emerald: '#10B981' }, fontFamily: { sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } };
+  </script>
+  <style>
+    :root{color-scheme:dark;scroll-behavior:smooth}
+    body{background:#0B0F19;color:#F8FAFC;font-family:Inter,sans-serif}
+    .grid-bg{background-image:linear-gradient(rgba(148,163,184,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.055) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+    .glass{background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(15,23,42,.72));border:1px solid rgba(148,163,184,.14);box-shadow:0 20px 70px rgba(0,0,0,.22);backdrop-filter:blur(16px)}
+    .gradient-text{background:linear-gradient(100deg,#67E8F9 0%,#818CF8 55%,#C4B5FD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .primary-btn{background:#10B981;color:#04130F;box-shadow:0 10px 30px rgba(16,185,129,.18);transition:transform .2s,box-shadow .2s,filter .2s}
+    .primary-btn:hover{transform:translateY(-3px);box-shadow:0 15px 38px rgba(16,185,129,.3);filter:brightness(1.08)}
+    .secondary-btn{border:1px solid rgba(148,163,184,.25);background:rgba(15,23,42,.65);transition:all .2s}
+    .secondary-btn:hover{border-color:#06B6D4;background:rgba(6,182,212,.08);transform:translateY(-2px)}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .book-wrap{perspective:1100px;filter:drop-shadow(0 35px 35px rgba(0,0,0,.45))}
+    .book{position:relative;width:220px;height:290px;transform:rotateY(-22deg) rotateX(5deg);transform-style:preserve-3d;transition:transform .5s}
+    .book-wrap:hover .book{transform:rotateY(-10deg) rotateX(2deg) translateY(-7px)}
+    .book-front{position:absolute;inset:0;border-radius:7px 13px 13px 7px;background:linear-gradient(145deg,#101d36,#172b4c 58%,#0e172b);border:1px solid rgba(103,232,249,.45);overflow:hidden;padding:24px 19px;box-shadow:inset -8px 0 14px rgba(0,0,0,.25)}
+    .book-front:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.08) 48%,transparent 60%);pointer-events:none}
+    .book-spine{position:absolute;left:-13px;top:5px;width:14px;height:280px;background:linear-gradient(90deg,#07101f,#1d355b);transform:rotateY(-90deg);transform-origin:right;border-radius:3px}
+    .book-edge{position:absolute;right:-7px;top:7px;width:8px;height:276px;background:repeating-linear-gradient(0deg,#dbeafe 0 2px,#94a3b8 2px 3px);transform:rotateY(90deg);transform-origin:left}
+    .terminal{background:#080D17;border:1px solid rgba(148,163,184,.2);box-shadow:0 25px 70px rgba(0,0,0,.4)}
+    .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .faq-answer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}
+    .faq-answer>div{overflow:hidden}
+    .faq-item.open .faq-answer{grid-template-rows:1fr}
+    .faq-item .chevron{transition:transform .25s}
+    .faq-item.open .chevron{transform:rotate(180deg)}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
+  </style>
+</head>
+<body class="overflow-x-hidden">
+  <div class="fixed inset-0 grid-bg pointer-events-none -z-10"></div>
+  <div class="fixed -top-48 left-1/2 -translate-x-1/2 w-[620px] h-[420px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none -z-10"></div>
+
+  <header class="sticky top-0 z-50 border-b border-white/5 bg-[#0B0F19]/85 backdrop-blur-xl">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between" aria-label="Navegação principal">
+      <a href="#" class="flex items-center gap-2 font-bold tracking-tight" aria-label="Página inicial">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center text-slate-950 font-black">{"</>"}</span>
+        <span>Jhonatan<span class="text-cyan-300">.dev</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+        <a class="hover:text-cyan-300 transition" href="#conteudo">O que você vai aprender</a>
+        <a class="hover:text-cyan-300 transition" href="#autor">Autor</a>
+        <a class="hover:text-cyan-300 transition" href="#garantia">Garantia</a>
+      </div>
+      <a href="#oferta" class="primary-btn rounded-lg px-4 py-2.5 text-sm font-bold">Quero começar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="relative max-w-7xl mx-auto px-5 sm:px-8 pt-16 pb-20 md:pt-24 md:pb-28">
+      <div class="absolute right-0 top-16 w-72 h-72 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center relative">
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3.5 py-2 text-xs sm:text-sm text-cyan-200 mb-7">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            GUIA PRÁTICO • DO ZERO À PUBLICAÇÃO
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-[3.65rem] leading-[1.08] font-extrabold tracking-[-.045em] max-w-2xl">
+            Transforme suas ideias em <span class="gradient-text">sites de verdade</span> com GitHub e GPT.
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-slate-300 max-w-xl">
+            Aprenda a planejar, criar e publicar páginas web usando ferramentas acessíveis e inteligência artificial como parceira no processo.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="#oferta" class="primary-btn rounded-xl px-6 py-4 text-center font-extrabold">Quero aprender a criar sites <span aria-hidden="true">→</span></a>
+            <a href="#conteudo" class="secondary-btn rounded-xl px-6 py-4 text-center font-semibold text-slate-200">Ver o conteúdo</a>
+          </div>
+          <p class="mt-4 flex items-center gap-2 text-xs text-slate-400"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Acesso digital após a confirmação do pagamento. Ambiente de compra seguro.</p>
+          <div class="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-xs text-slate-400">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Linguagem acessível</span>
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Exemplos práticos</span>
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> No seu ritmo</span>
+          </div>
+        </div>
+
+        <div class="reveal flex flex-col items-center gap-8">
+          <div class="book-wrap pt-2">
+            <div class="book">
+              <div class="book-spine"></div><div class="book-edge"></div>
+              <div class="book-front flex flex-col">
+                <div class="font-mono text-[9px] tracking-[.22em] text-cyan-300">GUIA DIGITAL • WEB DEV</div>
+                <div class="mt-8 text-[25px] leading-[1.12] font-black tracking-tight">CRIANDO<br><span class="text-cyan-300">SITES WEB</span><br>COM GITHUB<br><span class="text-indigo-300">+ GPT</span></div>
+                <div class="mt-4 h-px w-14 bg-cyan-300/70"></div>
+                <p class="mt-3 text-[10px] leading-4 text-slate-300">Do primeiro arquivo à publicação do seu projeto na internet.</p>
+                <div class="mt-auto flex items-end justify-between">
+                  <span class="text-[9px] text-slate-400">JHONATAN OLIVEIRA</span>
+                  <span class="font-mono text-[10px] text-cyan-200">{"</>"}</span>
+                </div>
+                <div class="absolute -right-3 top-20 w-24 h-24 rounded-full border border-cyan-300/20"></div>
+                <div class="absolute -right-1 top-[5.6rem] w-16 h-16 rounded-full border border-indigo-300/30"></div>
+              </div>
+            </div>
+          </div>
+          <div class="terminal w-full max-w-[390px] rounded-xl overflow-hidden">
+            <div class="flex items-center gap-1.5 px-4 py-3 border-b border-white/5">
+              <span class="dot bg-rose-400"></span><span class="dot bg-amber-300"></span><span class="dot bg-emerald-400"></span>
+              <span class="ml-3 text-[10px] font-mono text-slate-500">terminal • projeto-site</span>
+            </div>
+            <div class="p-4 font-mono text-[11px] sm:text-xs leading-6">
+              <p class="text-slate-500">$ git init</p>
+              <p class="text-emerald-300">Repositório inicializado ✓</p>
+              <p class="text-slate-500">$ git add . && git commit -m "meu site"</p>
+              <p class="text-cyan-200">Arquivos preparados para publicação</p>
+              <p class="text-slate-500">$ git push origin main</p>
+              <p class="text-indigo-300">Seu projeto está a caminho da web <span class="animate-pulse">▌</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-white/5 bg-white/[.018]">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-7 grid sm:grid-cols-3 gap-6 text-center">
+        <div><p class="text-sm font-bold text-slate-100">Comece com o essencial</p><p class="text-xs text-slate-500 mt-1">Sem precisar dominar tudo antes</p></div>
+        <div><p class="text-sm font-bold text-slate-100">Construa passo a passo</p><p class="text-xs text-slate-500 mt-1">Aprenda fazendo e testando</p></div>
+        <div><p class="text-sm font-bold text-slate-100">Publique seu projeto</p><p class="text-xs text-slate-500 mt-1">Conheça o fluxo do GitHub Pages</p></div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-28">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <p class="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">Para quem é este guia</p>
+        <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight">Um caminho mais claro para <span class="gradient-text">entrar no mundo web</span>.</h2>
+        <p class="mt-4 text-slate-400 leading-7">Você não precisa chegar sabendo tudo. Precisa de um ponto de partida e de um processo que faça sentido.</p>
+      </div>
+      <div class="mt-12 grid md:grid-cols-3 gap-5">
+        <article class="glass rounded-2xl p-7 reveal">
+          <div class="w-11 h-11 rounded-xl bg-cyan-400/10 text-cyan-300 flex items-center justify-center text-xl">⌘</div>
+          <h3 class="mt-5 text-lg font-bold">Quem está começando</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Para quem quer entender como um site é estruturado e dar os primeiros passos sem se perder em excesso de informação.</p>
+        </article>
+        <article class="glass rounded-2xl p-7 reveal">
+          <div class="w-11 h-11 rounded-xl bg-indigo-400/10 text-indigo-300 flex items-center justify-center text-xl">✦</div>
+          <h3 class="mt-5 text-lg font-bold">Quem quer usar IA melhor</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Para quem deseja aprender a orientar o GPT com instruções claras, revisar respostas e evoluir seus projetos.</p>
+        </article>
+        <article class="glass rounded-2xl p-7 reveal">
+          <div class="w-11 h-11 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center text-xl">↗</div>
+          <h3 class="mt-5 text-lg font-bold">Empreendedores e criadores</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Para quem quer montar uma presença online, apresentar uma ideia ou criar uma primeira página para um negócio.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="conteudo" class="bg-[#0E1524] border-y border-white/5">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-28">
+        <div class="max-w-2xl reveal">
+          <p class="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">O conteúdo do e-book</p>
+          <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight">Seis etapas para sair da ideia e chegar a um <span class="gradient-text">site publicado</span>.</h2>
+          <p class="mt-4 text-slate-400 leading-7">Uma sequência para entender as ferramentas, organizar o trabalho e construir com mais autonomia.</p>
+        </div>
+        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 01</span><h3 class="mt-3 font-bold text-lg">Fundamentos da web</h3><p class="mt-2 text-sm text-slate-400 leading-6">Entenda a função do HTML, CSS e JavaScript e como essas peças trabalham juntas.</p></article>
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 02</span><h3 class="mt-3 font-bold text-lg">Preparando o GitHub</h3><p class="mt-2 text-sm text-slate-400 leading-6">Conheça repositórios, arquivos, commits e a organização básica de um projeto.</p></article>
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 03</span><h3 class="mt-3 font-bold text-lg">GPT como parceiro</h3><p class="mt-2 text-sm text-slate-400 leading-6">Aprenda a descrever objetivos, pedir ajustes e trabalhar com respostas de código.</p></article>
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 04</span><h3 class="mt-3 font-bold text-lg">Construindo a página</h3><p class="mt-2 text-sm text-slate-400 leading-6">Estruture seções, textos, imagens e componentes para criar uma página coerente.</p></article>
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 05</span><h3 class="mt-3 font-bold text-lg">Ajustes e responsividade</h3><p class="mt-2 text-sm text-slate-400 leading-6">Revise o visual em diferentes telas, corrija detalhes e melhore a experiência.</p></article>
+          <article class="glass rounded-2xl p-6 reveal"><span class="font-mono text-xs text-cyan-300">MÓDULO 06</span><h3 class="mt-3 font-bold text-lg">Publicando com GitHub Pages</h3><p class="mt-2 text-sm text-slate-400 leading-6">Conheça o processo de publicação e os cuidados básicos depois que o site vai ao ar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-24">
+      <div class="glass rounded-3xl p-7 sm:p-10 md:p-12 relative overflow-hidden reveal">
+        <div class="absolute -right-20 -top-20 w-72 h-72 bg-indigo-500/15 blur-[90px] rounded-full"></div>
+        <div class="relative grid md:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <span class="inline-flex rounded-full bg-indigo-400/10 border border-indigo-300/20 text-indigo-200 text-xs font-bold px-3 py-1.5">BÔNUS INCLUSO</span>
+            <h2 class="mt-5 text-3xl font-extrabold tracking-tight">Pacote de prompts para acelerar seus próximos passos.</h2>
+            <p class="mt-3 text-slate-400 leading-7 max-w-2xl">Tenha modelos de instruções para planejar páginas, revisar textos, pedir melhorias visuais e investigar erros. Use como ponto de partida e adapte ao seu projeto.</p>
+          </div>
+          <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 border border-white/10 flex items-center justify-center text-4xl">✧</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="autor" class="border-y border-white/5 bg-white/[.018]">
+      <div class="max-w-5xl mx-auto px-5 sm:px-8 py-20 md:py-24 grid md:grid-cols-[180px_1fr] gap-8 md:gap-12 items-center reveal">
+        <div class="mx-auto md:mx-0">
+          <div class="w-36 h-36 rounded-full p-[3px] bg-gradient-to-br from-cyan-400 to-indigo-500">
+            <img src="https://via.placeholder.com/150" alt="Foto de perfil de Jhonatan Oliveira" class="w-full h-full rounded-full object-cover bg-slate-800">
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">Quem preparou este material</p>
+          <h2 class="mt-3 text-3xl font-extrabold">Jhonatan Oliveira</h2>
+          <p class="mt-4 text-slate-300 leading-7">Desenvolvedor web em construção contínua e entusiasta do uso prático da inteligência artificial. Este material nasceu da proposta de tornar o processo de criação e publicação de sites mais compreensível, mostrando como combinar ferramentas que estão ao alcance de quem quer começar.</p>
+          <p class="mt-3 text-sm text-slate-500">O objetivo é ensinar um caminho prático, incentivar a experimentação e ajudar você a desenvolver autonomia projeto após projeto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="oferta" class="max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-28">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <p class="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">Comece hoje</p>
+        <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight">Seu próximo projeto pode começar com <span class="gradient-text">um passo simples</span>.</h2>
+        <p class="mt-4 text-slate-400">Acesse o guia e avance no seu ritmo, colocando o conhecimento em prática.</p>
+      </div>
+      <div class="max-w-xl mx-auto mt-12 glass rounded-3xl p-7 sm:p-10 relative overflow-hidden reveal">
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-40 bg-cyan-500/10 blur-[80px]"></div>
+        <div class="relative text-center">
+          <span class="inline-flex rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-xs font-bold text-emerald-300">OFERTA DE LANÇAMENTO</span>
+          <p class="mt-6 text-sm text-slate-500">De <span class="line-through">R$ 67,00</span> por</p>
+          <div class="mt-1 flex items-start justify-center gap-1"><span class="mt-3 text-xl font-bold text-slate-300">R$</span><span class="text-6xl sm:text-7xl font-black tracking-[-.06em]">29</span><span class="mt-3 text-2xl font-bold">,90</span></div>
+          <p class="mt-2 text-sm text-slate-400">Pagamento único • Material digital</p>
+          <div class="my-8 h-px bg-white/10"></div>
+          <ul class="text-left space-y-4 text-sm text-slate-300">
+            <li class="flex gap-3"><span class="text-emerald-400">✓</span> E-book Criando Sites Web com GitHub e GPT Integrado</li>
+            <li class="flex gap-3"><span class="text-emerald-400">✓</span> 6 módulos organizados em uma sequência prática</li>
+            <li class="flex gap-3"><span class="text-emerald-400">✓</span> Pacote bônus de prompts para usar com IA</li>
+            <li class="flex gap-3"><span class="text-emerald-400">✓</span> Acesso digital após a confirmação do pagamento</li>
+          </ul>
+          <a href="#checkout" class="primary-btn mt-8 block w-full rounded-xl px-6 py-4 font-extrabold text-center">Quero meu e-book por R$ 29,90 <span aria-hidden="true">→</span></a>
+          <p class="mt-3 text-[11px] leading-5 text-slate-500">O botão está preparado para receber o link do checkout quando a plataforma de pagamento estiver configurada.</p>
+          <div id="checkout" class="mt-5 rounded-xl border border-dashed border-slate-600/70 bg-slate-900/40 p-3 text-xs text-slate-400">Área de checkout • link de pagamento a configurar</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="garantia" class="pb-20">
+      <div class="max-w-4xl mx-auto px-5 sm:px-8">
+        <div class="glass rounded-2xl p-7 sm:p-9 flex flex-col sm:flex-row gap-6 items-center text-center sm:text-left reveal">
+          <div class="w-16 h-16 shrink-0 rounded-full border border-emerald-400/30 bg-emerald-400/10 flex items-center justify-center text-3xl text-emerald-300">✓</div>
+          <div><h2 class="text-xl font-bold">7 dias para avaliar com tranquilidade</h2><p class="mt-2 text-sm leading-6 text-slate-400">Você tem o prazo de 7 dias corridos após a compra para solicitar o reembolso, conforme as condições legais aplicáveis. Se o material não for o que esperava, entre em contato pelo canal de suporte informado na compra.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#0E1524] border-y border-white/5">
+      <div class="max-w-3xl mx-auto px-5 sm:px-8 py-20">
+        <div class="text-center reveal"><p class="text-xs font-bold tracking-[.2em] text-cyan-300 uppercase">Dúvidas frequentes</p><h2 class="mt-4 text-3xl font-extrabold">Antes de começar</h2></div>
+        <div class="mt-10 space-y-3" id="faq">
+          <article class="faq-item glass rounded-xl reveal">
+            <button class="faq-question w-full flex items-center justify-between gap-4 text-left p-5 font-semibold text-sm sm:text-base" aria-expanded="false"><span>Preciso saber programar para aproveitar o e-book?</span><svg class="chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div><p class="px-5 pb-5 text-sm leading-6 text-slate-400">Não é necessário ter experiência avançada. O material foi pensado para apresentar os conceitos e ferramentas em uma sequência acessível. Ter curiosidade e disposição para praticar ajuda bastante.</p></div></div>
+          </article>
+          <article class="faq-item glass rounded-xl reveal">
+            <button class="faq-question w-full flex items-center justify-between gap-4 text-left p-5 font-semibold text-sm sm:text-base" aria-expanded="false"><span>Quais ferramentas vou utilizar?</span><svg class="chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div><p class="px-5 pb-5 text-sm leading-6 text-slate-400">O foco está em HTML, CSS, JavaScript, GitHub e ferramentas de IA como o GPT. Alguns serviços podem ter planos, limites ou recursos que mudam conforme o fornecedor.</p></div></div>
+          </article>
+          <article class="faq-item glass rounded-xl reveal">
+            <button class="faq-question w-full flex items-center justify-between gap-4 text-left p-5 font-semibold text-sm sm:text-base" aria-expanded="false"><span>Como recebo o material depois da compra?</span><svg class="chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div><p class="px-5 pb-5 text-sm leading-6 text-slate-400">O acesso será enviado digitalmente após a confirmação do pagamento, pelo canal definido na plataforma de checkout. Confira também sua caixa de spam ou lixo eletrônico.</p></div></div>
+          </article>
+          <article class="faq-item glass rounded-xl reveal">
+            <button class="faq-question w-full flex items-center justify-between gap-4 text-left p-5 font-semibold text-sm sm:text-base" aria-expanded="false"><span>O e-book garante que vou conseguir um emprego ou clientes?</span><svg class="chevron shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div><p class="px-5 pb-5 text-sm leading-6 text-slate-400">Não. O material é educativo e não promete emprego, renda ou resultados específicos. Seu progresso depende da prática, do desenvolvimento das habilidades e de fatores externos.</p></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-5 sm:px-8 py-9 flex flex-col sm:flex-row items-center justify-between gap-5 text-xs text-slate-500">
+    <p>© <span id="year"></span> Jhonatan Oliveira. Todos os direitos reservados.</p>
+    <div class="flex items-center gap-6"><a href="#suporte" class="hover:text-cyan-300 transition">Suporte</a><a href="#termos" class="hover:text-cyan-300 transition">Termos</a></div>
+    <span class="font-mono text-slate-600">feito para aprender e construir.</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const willOpen = !item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (willOpen) {
+          item.classList.add('open');
+          button.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
